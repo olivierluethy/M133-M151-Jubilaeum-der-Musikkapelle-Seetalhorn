@@ -1,0 +1,53 @@
+﻿@model Seetalhorn
+<form method="post">
+    <div class="quiz">
+    <h1 asp-for="Antwort1">Wie alt ist Günter Lauber, unser ältestes Mitglied?</h1>
+    <input type="radio" asp-for="Antwort1" value="78" />
+    <label asp-for="Antwort1">78</label><br />
+    <input type="radio" asp-for="Antwort1" value="74" />
+    <label asp-for="Antwort1">74</label><br />
+    <input type="radio" asp-for="Antwort1" value="81" />
+    <label asp-for="Antwort1">81</label><br />
+    <span asp-validation-for="Antwort1" class="text-danger"></span>
+
+    <h1 asp-for="Antwort2">Wie viel wiegen alle unsere Mitglieder zusammen (Schätzfrage)</h1>
+    <input type="radio" asp-for="Antwort2" value="ca. 4500 kg" />
+    <label asp-for="Antwort2">ca. 4500 kg</label><br />
+    <input type="radio" asp-for="Antwort2" value="ca. 4000 kg" />
+    <label asp-for="Antwort2">ca. 4000 kg</label><br />
+    <input type="radio" asp-for="Antwort2" value="ca. 4300 kg" />
+    <label asp-for="Antwort2">ca. 4300 kg</label><br />
+    <span asp-validation-for="Antwort2" class="text-danger"></span>
+
+    <h1 asp-for="Antwort3">Welches Instrument wird bei uns am meisten gespielt?</h1>
+    <input type="radio" asp-for="Antwort3" value="Trompete" />
+    <label asp-for="Antwort3">Trompete</label><br />
+    <input type="radio" asp-for="Antwort3" value="Posaune" />
+    <label asp-for="Antwort3">Posaune</label><br />
+    <input type="radio" asp-for="Antwort3" value="Triangel" />
+    <label asp-for="Antwort3">Triangel</label><br />
+    <span asp-validation-for="Antwort3" class="text-danger"></span>
+
+    <h1 asp-for="Antwort4">Welches Jubiläum feiern wir?</h1>
+    <input type="radio" asp-for="Antwort4" value="40" />
+    <label asp-for="Antwort4">40</label><br />
+    <input type="radio" asp-for="Antwort4" value="45" />
+    <label asp-for="Antwort4">45</label><br />
+    <input type="radio" asp-for="Antwort4" value="50" />
+    <label asp-for="Antwort4">50</label><br />
+    <span asp-validation-for="Antwort4" class="text-danger"></span>
+
+    <h1 asp-for="Antwort5">Was ist der Umfang des Hallwilersees?</h1>
+    <input type="radio" asp-for="Antwort5" value="20.281 km" />
+    <label asp-for="Antwort5">20.281 km</label><br />
+    <input type="radio" asp-for="Antwort5" value="19.088 km" />
+    <label asp-for="Antwort5">19.088 km</label><br />
+    <input type="radio" asp-for="Antwort5" value="18.989 km" />
+    <label asp-for="Antwort5">18.989 km</label><br />
+    <span asp-validation-for="Antwort5" class="text-danger"></span>
+
+    <h1 asp-for="Email">Geben sie hier bitte ihre Email-Adresse ein</h1>
+    <input type="email" asp-for="Email" placeholder="E-Mail"/>
+    <button type="submit" class="btn btn-primary" style="width:150px">Abschicken</button>
+</div>
+</form>

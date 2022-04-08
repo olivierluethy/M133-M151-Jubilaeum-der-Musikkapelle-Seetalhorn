@@ -32,39 +32,3 @@ h1 {
     border: 1px solid blue;
     color: blue;
 }
-/*Quiz*/
-.quizboard{
-    height: 50vh;
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
-}
-.quizboard h1 {
-    float: left;
-}
-.quizboard input {
-    margin-bottom: 0.5rem;
-    width:100%;
-    height: 50px;
-    font-size:50px;
-    cursor: context-menu;
-}
-.quizboard button {
-    background-color: darkblue;
-    border: 1px solid darkblue;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    margin-top: 2rem;
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-.quizboard button:hover {
-    background-color: white;
-    border: 1px solid darkblue;
-    color: darkblue;
-}
