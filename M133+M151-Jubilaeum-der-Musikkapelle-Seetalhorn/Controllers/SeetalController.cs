@@ -26,51 +26,40 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Competition(Seetalhorn obj)
         {
-            int points = 0;
-            if (obj.Antwort1 != "74")
+            var seetalhorn = _db.Seetalhorn.Any(x => x.Email == obj.Email);
+            if (seetalhorn)
             {
+                return RedirectToAction("Index");
             }
             else
             {
-                points++;
-            }
-            if(obj.Antwort2 != "ca. 4300 kg")
-            {
+                int points = 0;
+                if (obj.Antwort1 == "74")
+                {
+                    points++;
+                }
+                if (obj.Antwort2 == "ca. 4300 kg")
+                {
+                    points++;
+                }
+                if (obj.Antwort3 == "Trompete")
+                {
+                    points++;
+                }
+                if (obj.Antwort4 == "50")
+                {
+                    points++;
+                }
+                if (obj.Antwort5 == "19.088 km")
+                {
+                    points++;
+                }
+                obj.Punkte = points;
 
+                _db.Seetalhorn.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            else
-            {
-                points++;
-            }
-            if(obj.Antwort3 != "Trompete")
-            {
-
-            }
-            else
-            {
-                points++;
-            }
-            if(obj.Antwort4 != "50")
-            {
-
-            }
-            else
-            {
-                points++;
-            }
-            if(obj.Antwort5 != "19.088 km")
-            {
-
-            }
-            else
-            {
-                points++;
-            }
-            obj.Punkte = points;
-
-            _db.Seetalhorn.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
         }
     }
 }
