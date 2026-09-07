@@ -1,4 +1,6 @@
 using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Data;
+using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Models;
+using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+// Mail-Versand (Bestaetigungsmail an Teilnehmende) per MailKit/SMTP.
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 
 // Cookie-basierte Authentifizierung fuer den Admin-Bereich (ein gemeinsames Passwort).
 builder.Services

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Data;
 using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Models;
+using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
@@ -16,9 +17,17 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
         };
 
         private readonly ApplicationDbContext _db;
-        public SeetalController(ApplicationDbContext db)
+        private readonly IEmailSender _emailSender;
+        private readonly ILogger<SeetalController> _logger;
+
+        public SeetalController(
+            ApplicationDbContext db,
+            IEmailSender emailSender,
+            ILogger<SeetalController> logger)
         {
             _db = db;
+            _emailSender = emailSender;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -33,7 +42,7 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Competition(Seetalhorn obj)
+        public async Task<IActionResult> Competition(Seetalhorn obj)
         {
             if (!ModelState.IsValid)
             {
@@ -57,6 +66,25 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
 
             _db.Seetalhorn.Add(obj);
             _db.SaveChanges();
+
+            // Bestaetigungsmail versenden. Ein Fehler darf die Teilnahme nicht
+            // verhindern, deshalb wird er nur protokolliert.
+            try
+            {
+                var body =
+                    "Vielen Dank für deine Teilnahme am Jubiläums-Quiz der " +
+                    "Musikkapelle Seetalhorn!\n\n" +
+                    $"Du hast {points} von {CorrectAnswers.Length} Fragen richtig beantwortet.";
+                await _emailSender.SendAsync(
+                    obj.Email,
+                    "Danke für deine Teilnahme am Jubiläums-Quiz",
+                    body);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,
+                    "Bestätigungsmail an {Email} konnte nicht versendet werden.", obj.Email);
+            }
 
             TempData["Punkte"] = points;
             return RedirectToAction(nameof(Result));

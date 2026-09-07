@@ -44,6 +44,19 @@ dotnet user-secrets set "AdminSettings:Password" "<dein-passwort>"
 
 Ohne gesetztes Passwort ist keine Anmeldung möglich. Im Deployment kann der Wert stattdessen als Umgebungsvariable `AdminSettings__Password` bereitgestellt werden.
 
+## Bestätigungsmail
+Nach einer erfolgreichen Teilnahme wird eine Bestätigungsmail mit der erreichten Punktzahl an die angegebene Adresse versendet (per MailKit über SMTP). Schlägt der Versand fehl, wird der Fehler nur protokolliert – die Teilnahme bleibt gespeichert.
+
+Absender, Host und Port stehen unter `MailSettings` in `appsettings.json`. Das SMTP-Passwort wird – wie das Admin-Passwort – über User Secrets gesetzt, damit es nicht im Repository landet:
+
+```bash
+cd "M133+M151-Jubilaeum-der-Musikkapelle-Seetalhorn"
+dotnet user-secrets set "MailSettings:Mail" "<absender@example.com>"
+dotnet user-secrets set "MailSettings:Password" "<smtp-passwort>"
+```
+
+Bei Gmail als Host ist dafür ein [App-Passwort](https://support.google.com/accounts/answer/185833) nötig. Im Deployment können die Werte alternativ als Umgebungsvariablen `MailSettings__Mail` und `MailSettings__Password` gesetzt werden.
+
 ## Webseiten die mir geholfen haben
 Issue 1: Check if email already exists in the database<br>
 Link: https://stackoverflow.com/questions/54258869/check-if-the-user-already-exists-in-asp-net-mvc
