@@ -27,7 +27,6 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Models
         [Required(ErrorMessage = "Frage 5 ist Pflichtfeld")]
         public string Antwort5 { get; set; }
         [Display(Name = "Punkte")]
-        [Required(ErrorMessage = "{0} ist Pflichtfeld")]
         public int Punkte { get; set; }
     }
 }

@@ -26,6 +26,11 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Competition(Seetalhorn obj)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(obj);
+            }
+
             var seetalhorn = _db.Seetalhorn.Any(x => x.Email == obj.Email);
             if (seetalhorn)
             {
