@@ -1,4 +1,5 @@
-﻿using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Data;
+using System.Diagnostics;
+using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Data;
 using M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,40 +32,60 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
                 return View(obj);
             }
 
-            var seetalhorn = _db.Seetalhorn.Any(x => x.Email == obj.Email);
-            if (seetalhorn)
+            var emailExists = _db.Seetalhorn.Any(x => x.Email == obj.Email);
+            if (emailExists)
             {
-                return RedirectToAction("Index");
+                ModelState.AddModelError(nameof(obj.Email),
+                    "Mit dieser E-Mail Adresse wurde bereits teilgenommen.");
+                return View(obj);
             }
-            else
-            {
-                int points = 0;
-                if (obj.Antwort1 == "74")
-                {
-                    points++;
-                }
-                if (obj.Antwort2 == "ca. 4300 kg")
-                {
-                    points++;
-                }
-                if (obj.Antwort3 == "Trompete")
-                {
-                    points++;
-                }
-                if (obj.Antwort4 == "50")
-                {
-                    points++;
-                }
-                if (obj.Antwort5 == "19.088 km")
-                {
-                    points++;
-                }
-                obj.Punkte = points;
 
-                _db.Seetalhorn.Add(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+            int points = 0;
+            if (obj.Antwort1 == "74")
+            {
+                points++;
             }
+            if (obj.Antwort2 == "ca. 4300 kg")
+            {
+                points++;
+            }
+            if (obj.Antwort3 == "Trompete")
+            {
+                points++;
+            }
+            if (obj.Antwort4 == "50")
+            {
+                points++;
+            }
+            if (obj.Antwort5 == "19.088 km")
+            {
+                points++;
+            }
+            obj.Punkte = points;
+
+            _db.Seetalhorn.Add(obj);
+            _db.SaveChanges();
+
+            TempData["Punkte"] = points;
+            return RedirectToAction(nameof(Result));
+        }
+
+        public IActionResult Result()
+        {
+            if (TempData["Punkte"] is not int points)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Punkte = points;
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            var requestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            return View(new ErrorViewModel { RequestId = requestId });
         }
     }
 }

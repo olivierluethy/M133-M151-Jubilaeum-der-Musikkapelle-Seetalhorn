@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Ergebnis";
+    var punkte = (int)(ViewBag.Punkte ?? 0);
+}
+
+<div class="start">
+    <h1>Vielen Dank für deine Teilnahme!</h1>
+    <p>Du hast <strong>@punkte von 5</strong> Fragen richtig beantwortet.</p>
+    <a asp-controller="Seetal" asp-action="Index"><button>Zurück zur Startseite</button></a>
+</div>

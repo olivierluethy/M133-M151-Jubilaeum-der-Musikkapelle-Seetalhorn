@@ -61,6 +61,8 @@
 
         <p asp-for="Email">Geben sie hier bitte ihre Email-Adresse ein</p>
         <input type="email" asp-for="Email" placeholder="E-Mail"/>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <br />
 
         <button type="submit" class="btn btn-primary" style="width:150px">Abschicken</button>
     </td>
