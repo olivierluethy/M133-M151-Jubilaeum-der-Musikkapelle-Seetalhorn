@@ -7,6 +7,14 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
 {
     public class SeetalController : Controller
     {
+        // Korrekte Antworten in der Reihenfolge Antwort1..Antwort5.
+        // Die Werte muessen mit den value-Attributen der Radio-Buttons
+        // in Views/Seetal/Competition.cshtml uebereinstimmen.
+        private static readonly string[] CorrectAnswers =
+        {
+            "74", "ca. 4300 kg", "Trompete", "50", "19.088 km"
+        };
+
         private readonly ApplicationDbContext _db;
         public SeetalController(ApplicationDbContext db)
         {
@@ -40,27 +48,11 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Controllers
                 return View(obj);
             }
 
-            int points = 0;
-            if (obj.Antwort1 == "74")
+            var answers = new[]
             {
-                points++;
-            }
-            if (obj.Antwort2 == "ca. 4300 kg")
-            {
-                points++;
-            }
-            if (obj.Antwort3 == "Trompete")
-            {
-                points++;
-            }
-            if (obj.Antwort4 == "50")
-            {
-                points++;
-            }
-            if (obj.Antwort5 == "19.088 km")
-            {
-                points++;
-            }
+                obj.Antwort1, obj.Antwort2, obj.Antwort3, obj.Antwort4, obj.Antwort5
+            };
+            int points = answers.Where((answer, i) => answer == CorrectAnswers[i]).Count();
             obj.Punkte = points;
 
             _db.Seetalhorn.Add(obj);
