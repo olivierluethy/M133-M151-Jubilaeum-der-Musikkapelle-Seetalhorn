@@ -1,0 +1,20 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Admin-Login";
+}
+
+<h1>Admin-Login</h1>
+
+<form method="post" asp-controller="Admin" asp-action="Login">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <p>
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" class="form-control" style="max-width:300px" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </p>
+    <button type="submit" class="btn btn-primary">Anmelden</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

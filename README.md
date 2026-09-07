@@ -31,6 +31,19 @@ dotnet run
 
 Die App ist danach unter den in `Properties/launchSettings.json` konfigurierten Adressen erreichbar (standardmässig `https://localhost:7012` bzw. `http://localhost:5012`). Alternativ lässt sich die Projektmappe direkt in Visual Studio öffnen und mit F5 starten.
 
+## Admin-Bereich
+Unter `/Admin/Login` (bzw. über den «Admin»-Link im Footer) gelangt man zum geschützten Admin-Bereich. Dort lässt sich die Teilnehmerliste einsehen und ein Gewinner unter allen Teilnehmenden mit voller Punktzahl (5/5) auslosen.
+
+Der Zugang ist durch ein gemeinsames Passwort geschützt. Damit kein Passwort im Repository landet, wird es über User Secrets gesetzt:
+
+```bash
+cd "M133+M151-Jubilaeum-der-Musikkapelle-Seetalhorn"
+dotnet user-secrets init
+dotnet user-secrets set "AdminSettings:Password" "<dein-passwort>"
+```
+
+Ohne gesetztes Passwort ist keine Anmeldung möglich. Im Deployment kann der Wert stattdessen als Umgebungsvariable `AdminSettings__Password` bereitgestellt werden.
+
 ## Webseiten die mir geholfen haben
 Issue 1: Check if email already exists in the database<br>
 Link: https://stackoverflow.com/questions/54258869/check-if-the-user-already-exists-in-asp-net-mvc

@@ -28,5 +28,7 @@ namespace M133_M151_Jubilaeum_der_Musikkapelle_Seetalhorn.Models
         public string Antwort5 { get; set; } = string.Empty;
         [Display(Name = "Punkte")]
         public int Punkte { get; set; }
+        [Display(Name = "Gewinner")]
+        public bool IsWinner { get; set; }
     }
 }

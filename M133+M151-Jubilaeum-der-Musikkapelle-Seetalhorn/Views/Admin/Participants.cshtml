@@ -1,0 +1,59 @@
+@model List<Seetalhorn>
+@{
+    ViewData["Title"] = "Teilnehmende";
+    var winner = Model.FirstOrDefault(x => x.IsWinner);
+    var hasWinner = winner != null;
+}
+
+<div style="display:flex; justify-content:space-between; align-items:center">
+    <h1>Teilnehmende (@Model.Count)</h1>
+    <form method="post" asp-controller="Admin" asp-action="Logout">
+        <button type="submit" class="btn btn-secondary btn-sm">Abmelden</button>
+    </form>
+</div>
+
+@if (TempData["DrawMessage"] != null)
+{
+    <p class="alert alert-info">@TempData["DrawMessage"]</p>
+}
+
+@if (hasWinner)
+{
+    <p class="alert alert-success">
+        <strong>Aktueller Gewinner:</strong> @winner!.Email (@winner.Punkte Punkte)
+    </p>
+}
+else
+{
+    <p class="text-muted">Noch kein Gewinner gezogen.</p>
+}
+
+<form method="post" asp-controller="Admin" asp-action="Draw"
+      onsubmit="@(hasWinner ? "return confirm('Es wurde bereits ein Gewinner gezogen. Diesen ersetzen?');" : null)">
+    <button type="submit" class="btn btn-primary">Gewinner ziehen (nur 5/5)</button>
+</form>
+
+<table class="table" style="margin-top:1rem">
+    <thead>
+        <tr>
+            <th>E-Mail</th>
+            <th>Punkte</th>
+            <th>Gewinner</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr class="@(p.IsWinner ? "table-success" : null)">
+                <td>@p.Email</td>
+                <td>@p.Punkte</td>
+                <td>@(p.IsWinner ? "🏆" : "")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Count == 0)
+{
+    <p>Noch keine Teilnahmen vorhanden.</p>
+}
