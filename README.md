@@ -1,6 +1,36 @@
 # M133-M151-Jubilaeum-der-Musikkapelle-Seetalhorn
 Eine Webseite entwickelt mit ASP.NET Core MVC, in welcher Besucher einen Wettbewerb ausfüllen können.
 
+## Voraussetzungen
+- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
+- SQL Server – standardmässig **SQL Server LocalDB** (Teil von Visual Studio bzw. der SQL Server Express-Installation, nur unter Windows verfügbar)
+- Optional: das EF-Core-Tool für Migrationen (`dotnet tool install --global dotnet-ef`)
+
+## Projekt bauen
+Aus dem Repository-Wurzelverzeichnis:
+
+```bash
+dotnet build "M133+M151-Jubilaeum-der-Musikkapelle-Seetalhorn.sln"
+```
+
+## Datenbank einrichten
+Die Verbindungszeichenkette steht in `appsettings.Development.json` unter `ConnectionStrings:DefaultConnection` und zeigt auf eine lokale LocalDB-Instanz. Die Datenbank wird über die vorhandenen EF-Core-Migrationen erstellt:
+
+```bash
+cd "M133+M151-Jubilaeum-der-Musikkapelle-Seetalhorn"
+dotnet ef database update
+```
+
+Nutzt du eine andere SQL-Server-Instanz, passe den Wert von `DefaultConnection` entsprechend an.
+
+## Anwendung starten
+```bash
+cd "M133+M151-Jubilaeum-der-Musikkapelle-Seetalhorn"
+dotnet run
+```
+
+Die App ist danach unter den in `Properties/launchSettings.json` konfigurierten Adressen erreichbar (standardmässig `https://localhost:7012` bzw. `http://localhost:5012`). Alternativ lässt sich die Projektmappe direkt in Visual Studio öffnen und mit F5 starten.
+
 ## Webseiten die mir geholfen haben
 Issue 1: Check if email already exists in the database<br>
 Link: https://stackoverflow.com/questions/54258869/check-if-the-user-already-exists-in-asp-net-mvc
